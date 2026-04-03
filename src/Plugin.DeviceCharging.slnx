@@ -6,9 +6,6 @@
     <File Path="../README.md" />
     <File Path="../global.json" />
   </Folder>
-  <Folder Name="/Samples/">
-    <Project Path="../samples/Plugin.DeviceCharging.Sample/Plugin.DeviceCharging.Sample.csproj" />
-  </Folder>
   <Folder Name="/Tests/">
     <Project Path="Plugin.DeviceCharging.UnitTest/Plugin.DeviceCharging.UnitTest.csproj" />
   </Folder>
