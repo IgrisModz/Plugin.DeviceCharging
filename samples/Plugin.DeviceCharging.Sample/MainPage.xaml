@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:viewModels="clr-namespace:Plugin.DeviceCharging.Sample.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plugin.DeviceCharging.Sample.MainPage"
+             x:DataType="viewModels:MainViewModel">
+
+    <Grid>
+        <RefreshView x:Name="MainRefreshView"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}">
+            <ScrollView x:Name="MainScrollView"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalScrollBarVisibility="Never">
+                <WebView x:Name="MainWebView"
+                         Source="https://novelfire.net/"
+                         android:WebView.DisplayZoomControls="False"
+                         android:WebView.EnableZoomControls="True"
+                         Navigating="MainWebView_Navigating"/>
+            </ScrollView>
+        </RefreshView>
+    </Grid>
+
+</ContentPage>

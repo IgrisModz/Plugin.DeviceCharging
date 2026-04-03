@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../.editorconfig" />
+    <File Path="../Directory.Build.props" />
+    <File Path="../Directory.Build.targets" />
+    <File Path="../README.md" />
+    <File Path="../global.json" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="Plugin.DeviceCharging.Sample/Plugin.DeviceCharging.Sample.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="../src/Plugin.DeviceCharging.UnitTest/Plugin.DeviceCharging.UnitTest.csproj" />
+  </Folder>
+  <Project Path="../src/Plugin.DeviceCharging/Plugin.DeviceCharging.csproj" />
+</Solution>

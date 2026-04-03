@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Plugin.DeviceCharging.Sample.Controls"
+             xmlns:viewmodels="clr-namespace:Plugin.DeviceCharging.Sample.ViewModels"
+             xmlns:mi="http://www.igrismodz.com/dotnet/2026/maui/icons"
+             x:Class="Plugin.DeviceCharging.Sample.SettingsPage"
+             Title="SettingsPage"
+             x:DataType="viewmodels:SettingsViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <Grid>
+            <Border Margin="0"
+                    Padding="15,0,25,0"
+                    Stroke="Transparent"
+                    StrokeShape="Rectangle"
+                    StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Primary}"
+                            Opacity=".8"
+                            Radius="14"
+                            Offset="0,7" />
+                </Border.Shadow>
+                <Grid ColumnDefinitions="Auto, *">
+                    <Image Margin="10"
+                           HeightRequest="40"
+                           Source="icon.png"
+                           WidthRequest="40" />
+                    <Label Grid.Column="1"
+                           FontSize="Title"
+                           Style="{StaticResource Headline}"
+                           Text="DeviceCharging Sample"
+                           VerticalOptions="Center"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <Grid MaximumWidthRequest="800">
+                <Border Margin="20"
+                        Shadow="{StaticResource BubbleShadow}"
+                        VerticalOptions="Start">
+                    <VerticalStackLayout Padding="25" Spacing="5">
+                        <Label Text="Settings" FontSize="28" FontAttributes="Bold" Margin="0,0,0,10"/>
+
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="APPEARANCE" FontSize="14" TextColor="{StaticResource PrimaryDark}" FontAttributes="Bold"/>
+                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
+
+                                <mi:MaterialSymbolsRoundedIcon Icon="Palette" FontSize="26" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                                       Text="Theme"
+                                       VerticalOptions="Center"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"/>
+                                <controls:MaterialPicker Grid.Column="2"
+                                                         VerticalOptions="Center"
+                                                         Variant="Filled"
+                                                         WidthRequest="150"
+                                                         Options="{Binding ThemeOptions}"
+                                                         SelectedOption="{Binding SelectedTheme}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="READING COMFORT" FontSize="14" TextColor="{StaticResource PrimaryDark}" FontAttributes="Bold"/>
+
+                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
+                                <mi:MaterialSymbolsRoundedIcon Icon="Lightbulb" FontSize="26" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" VerticalOptions="Center" />
+                                <Label Grid.Column="1"
+                                       Text="Keep the screen on"
+                                       VerticalOptions="Center"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"/>
+                                <controls:MaterialPicker Grid.Column="2"
+                                                         VerticalOptions="Center"
+                                                         Variant="Filled"
+                                                         WidthRequest="150"
+                                                         Options="{Binding KeepScreenOnOptions}"
+                                                         SelectedOption="{Binding SelectedKeepScreenOnMode}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

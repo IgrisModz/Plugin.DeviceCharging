@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:mi="http://www.igrismodz.com/dotnet/2026/maui/icons"
+               xmlns:controls="clr-namespace:Plugin.DeviceCharging.Sample.Controls"
+               xmlns:models="clr-namespace:Plugin.DeviceCharging.Sample.Models"
+               x:Class="Plugin.DeviceCharging.Sample.Controls.SelectionPopup"
+               Margin="0"
+               Padding="0"
+               x:TypeArguments="models:SelectOption"
+               BackgroundColor="Transparent">
+    <Grid>
+        <Border MaximumWidthRequest="400"
+                StrokeShape="RoundRectangle 4"
+                Padding="10"
+                Background="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}">
+            <CollectionView x:Name="ListOptions"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SelectOption">
+                        <Border StrokeShape="RoundRectangle 8"
+                                StrokeThickness="0"
+                                Margin="2"
+                                Padding="0">
+
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{AppThemeBinding Light=#A493F9, Dark=#3D209F}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped" 
+                                                      CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="40,*" Padding="12" ColumnSpacing="8">
+                                <mi:MaterialSymbolsRoundedIcon Icon="{Binding Icon}" 
+                                                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                                               FontSize="26" />
+                                <Label Grid.Column="1" 
+                                       Text="{Binding Label}" 
+                                       VerticalOptions="Center" 
+                                       FontSize="16">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </Grid>
+</toolkit:Popup>
