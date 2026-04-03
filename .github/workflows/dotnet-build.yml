@@ -16,14 +16,13 @@ on:
 
 env:
   TOOLKIT_NET_VERSION: '10.0.100'
-  LATEST_NET_VERSION: '10.0.X'
+  LATEST_NET_VERSION: '10.0.x'
   PathToLibrarySolution: 'src/Plugin.DeviceCharging.slnx'
-  PathToSampleSolution: 'samples/Plugin.DeviceCharging.Sample.slnx'
-  PathToPluginDeviceChargingCsproj: 'src/Plugin.DeviceCharging.UnitTest/Plugin.DeviceCharging.UnitTest.csproj'
-  PathToPluginDeviceChargingSampleCsproj: 'samples/Plugin.DeviceCharging.Sample/lugin.DeviceCharging.Sample.csproj'
+  PathToSampleSolution: 'samples/Plugin.DeviceCharging.Samples.slnx'
+  PathToPluginDeviceChargingCsproj: 'src/Plugin.DeviceCharging/Plugin.DeviceCharging.csproj'
+  PathToPluginDeviceChargingSampleCsproj: 'samples/Plugin.DeviceCharging.Sample/Plugin.DeviceCharging.Sample.csproj'
   PluginDeviceChargingLibrary_Xcode_Version: '26.1'
   PluginDeviceChargingSample_Xcode_Version: '26.2'
-
 jobs:
   build_sample:
     name: Build Sample App using Latest .NET SDK
@@ -35,11 +34,11 @@ jobs:
 
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v6
+        uses: actions/checkout@v6
     
       - name: Set Latest Xcode Version
         if: runner.os == 'macOS'
-        uses: maxim-lobanov/setup-dotnet@v1
+        uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version:  ${{ env.PluginDeviceChargingSample_Xcode_Version }}
       
@@ -47,7 +46,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.LATEST_NET_VERSION }}
-          dotnet-quality: 'ga'
 
       - uses: actions/setup-java@v5
         with:
@@ -74,7 +72,7 @@ jobs:
         os: [ windows-latest, macos-26 ]
     steps:
       - name: Checkout code
-        uses: action/checkout@v6
+        uses: actions/checkout@v6
 
       - name: Set Xcode Version
         if: runner.os == 'macOS'
@@ -83,10 +81,9 @@ jobs:
           xcode-version: ${{ env.PluginDeviceChargingLibrary_Xcode_Version }}
           
       - name: Install .NET SDK v${{ env.TOOLKIT_NET_VERSION }}
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: ${{ env.TOOLKIT_NET_VERSION }}
-          dotnet-quality: 'ga'
 
       - uses: actions/setup-java@v5
         with:
@@ -103,3 +100,27 @@ jobs:
 
       - name: 'Build Plugin.DeviceCharging'
         run: dotnet build ${{ env.PathToPluginDeviceChargingCsproj }} -c Release
+
+  publish_nuget:
+    name: Publish to NuGet
+    needs: build_library
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        
+      - name: Install .NET SDK v${{ env.TOOLKIT_NET_VERSION }}
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.TOOLKIT_NET_VERSION }}
+
+      - name: Install .NET MAUI Workload
+        run: |
+          dotnet workload install maui
+          
+      - name: Pack Plugin.DeviceCharging
+        run: dotnet pack ${{ env.PathToPluginDeviceChargingCsproj }} -c Release -o ./artifacts
+        
+      - name: Publish to NuGet
+        run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
