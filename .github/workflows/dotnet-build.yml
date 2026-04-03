@@ -81,7 +81,7 @@ jobs:
           xcode-version: ${{ env.PluginDeviceChargingLibrary_Xcode_Version }}
           
       - name: Install .NET SDK v${{ env.TOOLKIT_NET_VERSION }}
-        uses: actions/setup-dotnet@v6
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.TOOLKIT_NET_VERSION }}
 
