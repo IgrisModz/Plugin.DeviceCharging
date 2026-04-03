@@ -17,8 +17,6 @@
     <SingleProject>true</SingleProject>
     <AllowMissingPrunePackageData>true</AllowMissingPrunePackageData>
 
-
-
     <RootNamespace>Plugin.DeviceCharging.Sample</RootNamespace>
     <ApplicationIdGuid>8FE69920-DBF8-4B2D-8406-76BD8961AD56</ApplicationIdGuid>
 
@@ -34,6 +32,7 @@
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
