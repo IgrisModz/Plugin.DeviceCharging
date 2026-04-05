@@ -60,7 +60,7 @@ jobs:
       - name: Display dotnet info
         run: dotnet --info
 
-      - name: Build Community Toolkit Sample
+      - name: Build Plugin DeviceCharging Sample
         run: dotnet build -c Release ${{ env.PathToPluginDeviceChargingSampleCsproj }}
 
   build_library:
