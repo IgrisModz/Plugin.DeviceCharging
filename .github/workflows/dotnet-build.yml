@@ -104,7 +104,11 @@ jobs:
   publish_nuget:
     name: Publish to NuGet
     needs: build_library
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, macos-26 ]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout code
@@ -118,6 +122,7 @@ jobs:
       - name: Install .NET MAUI Workload
         run: |
           dotnet workload install maui
+          dotnet workload update
           
       - name: Pack Plugin.DeviceCharging
         run: dotnet pack ${{ env.PathToPluginDeviceChargingCsproj }} -c Release -o ./artifacts
